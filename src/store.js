@@ -9,6 +9,7 @@ export default new Vuex.Store({
     user: null,
     photos: [],
     photo: null,
+    comments: [],
   },
   mutations: {
     setUser(state, user) {
@@ -19,6 +20,9 @@ export default new Vuex.Store({
     },
     setCurrentPhoto(state, photo) {
       state.photo = photo;
+    },
+    setComments(state, comments) {
+      state.comments = comments;
     }
   },
   actions: {
@@ -91,6 +95,26 @@ export default new Vuex.Store({
         return "";
       }
       catch (error) {
+        return "";
+      }
+    },
+    async getComments(context, data) {
+      try {
+        let response = await axios.get("/api/comments/"+ data.photo.id);
+        context.commit('setComments', response.data);
+        return "";
+      } catch (error) {
+        return "";
+      }
+    },
+    async postComment(context, data) {
+      try {
+        await axios.post("/api/comments/", data);
+        this.dispatch('getComments', {
+          photo: this.state.photo
+        })
+        return ""
+      } catch (error) {
         return "";
       }
     }
