@@ -53,7 +53,7 @@ export default {
       return this.$store.state.photos;
     }
   },
-  created() {
+  async created() {
     await this.$store.dispatch("getUser");
     await this.$store.dispatch("getMyPhotos");
   },

@@ -29,6 +29,16 @@ const photoSchema = new mongoose.Schema({
   },
 });
 
+//Make _id into id
+photoSchema.virtual('id')
+  .get(function () {
+    return this._id.toHexString();
+  });
+
+photoSchema.set('toJSON', {
+  virtuals: true
+});
+
 const Photo = mongoose.model('Photo', photoSchema);
 
 // upload photo
@@ -77,6 +87,19 @@ router.get("/all", async (req, res) => {
       created: -1
     }).populate('user');
     return res.send(photos);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(500);
+  }
+});
+
+// get a single photos
+router.get("/:id", async (req, res) => {
+  try {
+    let photo = await Photo.findOne({
+      _id: req.params.id
+    })().populate('user');
+    return res.send(photo);
   } catch (error) {
     console.log(error);
     return res.sendStatus(500);

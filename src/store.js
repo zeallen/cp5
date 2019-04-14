@@ -7,7 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: null,
-    photos: []
+    photos: [],
+    photo: null,
   },
   mutations: {
     setUser(state, user) {
@@ -15,6 +16,9 @@ export default new Vuex.Store({
     },
     setPhotos(state, photos) {
       state.photos = photos;
+    },
+    setCurrentPhoto(state, photo) {
+      state.photo = photo;
     }
   },
   actions: {
@@ -79,5 +83,16 @@ export default new Vuex.Store({
       } catch (error) {
         return "";
       }
+    },
+    async getOnePhoto(context, data) {
+      try {
+        let response = await axios.get("/api/photos/" + data.id);
+        context.commit("setCurrentPhoto", response.data);
+        return "";
+      }
+      catch (error) {
+        return "";
+      }
+    }
   }
 })
