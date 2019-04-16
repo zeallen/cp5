@@ -10,6 +10,7 @@
 import ImageGallery from "@/components/ImageGallery.vue";
 import Footer from "@/components/Footer.vue";
 
+//random
 export default {
   name: "home",
   components: {
