@@ -7,37 +7,32 @@
         </div>
         <div>
           <p>
-            <a @click="toggleUpload">
-              <i class="far fa-image"></i>
-            </a>
             <a href="#" @click="logout">
               <i class="fas fa-sign-out-alt"></i>
             </a>
           </p>
         </div>
       </div>
-      <uploader :show="show" @escape="escape" @uploadFinished="uploadFinished"/>
-      <image-gallery :photos="photos"/>
+      <router-link to="/newquiz" class="pure-button pure-input-1-4 pure-button-primary">New Quiz</router-link>
+      <h1><u> My Quizzes </u></h1>
+      <quiz-list :quizzes="quizzes"/>
     </div>
     <div v-else>
-      <p>If you would like to upload photos, please register for an account or login.</p>
-      <router-link to="/register" class="pure-button">Register</router-link>or
-      <router-link to="/login" class="pure-button">Login</router-link>
+      <p>If you would like to make quizzes, please register for an account or login.</p>
+      <router-link to="/register" class="pure-button pure-input-1-4 pure-button-primary">Register</router-link> or
+      <router-link to="/login" class="pure-button pure-input-1-4 pure-button-primary">Login</router-link>
     </div>
   </div>
 </template>
 
 <script>
-import EscapeEvent from '@/components/EscapeEvent.vue'
-import Uploader from '@/components/Uploader.vue'
-import ImageGallery from '@/components/ImageGallery.vue'
+import EscapeEvent from "@/components/EscapeEvent.vue";
+import QuizList from "@/components/QuizList.vue";
 
 export default {
   name: "mypage",
   components: {
-    Uploader,
-    ImageGallery,
-    EscapeEvent
+    QuizList
   },
   data() {
     return {
@@ -49,13 +44,13 @@ export default {
     user() {
       return this.$store.state.user;
     },
-     photos() {
-      return this.$store.state.photos;
+    quizzes() {
+      return this.$store.state.quizzes;
     }
   },
   async created() {
     await this.$store.dispatch("getUser");
-    await this.$store.dispatch("getMyPhotos");
+    await this.$store.dispatch("getMyQuizzes");
   },
   methods: {
     async logout() {
@@ -67,18 +62,7 @@ export default {
     },
     escape() {
       this.show = false;
-    },
-    toggleUpload() {
-      this.show = true;
-    },
-     async uploadFinished() {
-      this.show = false;
-      try {
-        this.error = await this.$store.dispatch("getMyPhotos");
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    }
   }
 };
 </script>

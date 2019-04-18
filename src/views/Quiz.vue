@@ -45,10 +45,10 @@
 import moment from "moment";
 
 export default {
-  name: "photo",
+  name: "quiz",
   data() {
     return {
-      commentString: ""
+      quizString: ""
     };
   },
   computed: {
@@ -88,7 +88,8 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    }
+    },
+    
   }
 };
 </script>

@@ -7,22 +7,22 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: null,
-    photos: [],
-    photo: null,
-    comments: [],
+    quizzes: [],
+    quiz: null,
+    questions: [],
   },
   mutations: {
     setUser(state, user) {
       state.user = user;
     },
-    setPhotos(state, photos) {
-      state.photos = photos;
+    setQuizzes(state, quizzes) {
+      state.quizzes = quizzes;
     },
-    setCurrentPhoto(state, photo) {
-      state.photo = photo;
+    setCurrentQuiz(state, quiz) {
+      state.quiz = quiz;
     },
-    setComments(state, comments) {
-      state.comments = comments;
+    setQuestions(state, questions) {
+      state.questions = questions;
     }
   },
   actions: {
@@ -62,61 +62,85 @@ export default new Vuex.Store({
         return "";
       }
     },
-    async upload(context, data) {
+
+    async postQuiz(context, data) {
       try {
-        await axios.post('/api/photos', data);
-        return "";
-      } catch (error) {
-        return error.response.data.message;
-      }
-    },
-    async getMyPhotos(context) {
-      try {
-        let response = await axios.get("/api/photos");
-        context.commit('setPhotos', response.data);
+        await axios.post("/api/quizzes", data);
+        this.dispatch('getMyQuizzes');
         return "";
       } catch (error) {
         return "";
       }
     },
-    async getAllPhotos(context) {
+    async getMyQuizzes(context) {
       try {
-        let response = await axios.get("/api/photos/all");
-        context.commit("setPhotos", response.data);
+        let response = await axios.get("/api/quizzes");
+        context.commit('setQuizzes', response.data);
         return "";
       } catch (error) {
         return "";
       }
     },
-    async getOnePhoto(context, data) {
+    async getAllQuizzes(context) {
       try {
-        let response = await axios.get("/api/photos/" + data.id);
-        context.commit("setCurrentPhoto", response.data);
+        let response = await axios.get("/api/quizzes/all");
+        context.commit("setQuizzes", response.data);
+        return "";
+      } catch (error) {
+        return "";
+      }
+    },
+    async getOneQuiz(context, data) {
+      try {
+        let response = await axios.get("/api/quizzes/" + data.id);
+        context.commit("setCurrentQuiz", response.data);
         return "";
       }
       catch (error) {
         return "";
       }
     },
-    async getComments(context, data) {
+    async deleteQuiz(context, data) {
       try {
-        let response = await axios.get("/api/comments/"+ data.photo.id);
-        context.commit('setComments', response.data);
+        let response = await axios.delete("/api/quizzes/" + data.id);
+        this.dispatch('getMyQuizzes');
+        return "";
+      }
+      catch (error) {
+        return "";
+      }
+    },
+    async getQuestions(context, data) {
+      try {
+        let response = await axios.get("/api/questions/" + data.quiz.id);
+        context.commit('setQuestions', response.data);
         return "";
       } catch (error) {
         return "";
       }
     },
-    async postComment(context, data) {
+    async postQuestion(context, data) {
       try {
-        await axios.post("/api/comments/", data);
-        this.dispatch('getComments', {
-          photo: this.state.photo
+        await axios.post("/api/questions", data);
+        this.dispatch('getQuestions', {
+          quiz: this.state.quiz
         })
         return ""
       } catch (error) {
         return "";
       }
-    }
+    },
+    async deleteQuestion(context, data) {
+      try {
+        let response = await axios.delete("/api/questions/" + data.id);
+        this.dispatch('getQuestions', {
+          quiz: this.state.quiz
+        });
+        return "";
+      }
+      catch (error) {
+        return "";
+      }
+    },
   }
 })

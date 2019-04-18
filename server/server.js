@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({
 const mongoose = require('mongoose');
 
 // connect to the database
-mongoose.connect('mongodb://localhost:27017/photobomb', {
+mongoose.connect('mongodb://localhost:27017/triviabit', {
   useNewUrlParser: true
 });
 
@@ -26,4 +26,10 @@ app.use("/api/photos", photos.routes);
 const comments = require("./comments.js");
 app.use("/api/comments", comments.routes);
 
-app.listen(3002, () => console.log('Server listening on port 3001!'));
+const quizzes = require("./quizzes.js");
+app.use("/api/quizzes", quizzes.routes);
+
+const questions = require("./questions.js");
+app.use("/api/questions", questions.routes);
+
+app.listen(3002, () => console.log('Server listening on port 3002!'));

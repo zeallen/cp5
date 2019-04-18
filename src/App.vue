@@ -1,13 +1,13 @@
 <template>
 <div id="app">
   <div class="pure-menu">
-    <span class="pure-menu-heading">Photo Bomb</span>
+    <span class="pure-menu-heading">Triviabit</span>
     <ul class="pure-menu-list">
       <li class="pure-menu-item">
         <router-link to="/" class="pure-menu-link">Home</router-link>
       </li>
       <li class="pure-menu-item">
-        <router-link to="/mypage" class="pure-menu-link">My Page</router-link>
+        <router-link to="/mypage" class="pure-menu-link">My Quizzes</router-link>
       </li>
     </ul>
   </div>
@@ -34,14 +34,14 @@
   /* display: inline-block; */
   /* Or set the width explicitly: */
   text-align: left;
-  background: #000;
+  background: #36B1BF;
 }
 
 .pure-menu-heading {
   color: #fff;
   font-size: 1.2em;
   padding: 20px 20px;
-  background-color: #F2385A;
+  background-color: #4257B2;
   margin-bottom: 10px;
 }
 
@@ -96,7 +96,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, .5);
+  background-color: #36B1BF;
   display: table;
   transition: opacity .3s ease;
 }
@@ -112,7 +112,7 @@ body {
   padding: 20px 30px;
   background-color: #fff;
   border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+  box-shadow: 0 2px 8px #36B1BF;
   transition: all .3s ease;
   font-family: Helvetica, Arial, sans-serif;
 }
